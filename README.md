@@ -12,7 +12,7 @@ The S&P 500 opening and closing price data is collected from [Yahoo's S&P 500 Da
 The Federal Funds Rate Prediction Market is collected from [Kalshi's]()
 The data set values range from July 30th 2025 to March 10th 2026
 ### Data Collection and Cleaning
-The project uses a Jupiter Notebook called the [S&P 500 Notebook](SP500_notebook.ipynb) to sort through the Yahoo S&P 500 data and collect the intraday differences between the previous trading day's closing price and the current trading day's opening price. SP500 data is pulled from the yahoo finance api in a daily, wide dataframe with multiple indexes. The dataframe indexes are collapsed to only be indexed on date, day change %, and lag variables are added to the data frame. The S&P 500 data is exported into a csv file under [SP500_data](SP500_data.csv). 
+The project uses a Jupiter Notebook called the [S&P 500 Notebook](SP500_notebook.ipynb) to sort through the Yahoo S&P 500 data and collect the intraday differences between the previous trading day's closing price and the current trading day's opening price. SP500 data is pulled from the yahoo finance api in a daily, wide dataframe with multiple indexes. The dataframe indexes are collapsed to be indexed only on date, day change %, and lag variables are added to the data frame. The S&P 500 data is exported into a csv file under [SP500_data](SP500_data.csv). 
 
 *summarize the documentation of the data like in Causal*
 *document all columns/features that are relevant to your analysis*
@@ -35,4 +35,5 @@ Time frame provided by FRED is limited (only a little more than 7 months). The p
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
