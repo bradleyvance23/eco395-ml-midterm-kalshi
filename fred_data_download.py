@@ -7,6 +7,7 @@ load_dotenv()
 fred = fredapi.Fred(api_key=os.getenv("FRED_API_KEY"))
 
 SERIES = {
+    "3m_treasury": "DGS3MO",
     "2yr_treasury": "DGS2",
     "10yr_treasury": "DGS10",
     "yield_curve": "T10Y2Y",
