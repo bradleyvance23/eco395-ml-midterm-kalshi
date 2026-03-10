@@ -11,7 +11,7 @@ SERIES = {
     "10yr_treasury": "DGS10",
     "yield_curve": "T10Y2Y",
     "VIX": "VIXCLS",
-    "fed_funds_rate": "FEDFUNDS"
+    "fed_funds_rate": "DFF"
     
 }
 
