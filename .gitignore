@@ -1,7 +1,3 @@
-SP500_notebook_output.ipynb
-SP500_data.parquet
-SP500futures_notebook_output.ipynb
-Overnight_SP500_data.csv
+.pem
+__pycache__
 .env
-SP500_data.csv
-fred_data.parquet
