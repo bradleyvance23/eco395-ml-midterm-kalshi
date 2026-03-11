@@ -4,13 +4,16 @@ import pandas as pd
 from pykalshi import CandlestickPeriod
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+
 load_dotenv()
+
 
 def get_fed_decision_tickers(client):
     """Get all tickers associated with fed decision market"""
     markets = client.get_markets(series_ticker="KXFEDDECISION")
     df = markets.to_dataframe()
     return df, df["ticker"].tolist()
+
 
 def fetch_ticker_candles(client, ticker, ticker_data):
     """Fetch hourly candlestick data for a single ticker and return as dataframe."""
@@ -31,8 +34,11 @@ def fetch_ticker_candles(client, ticker, ticker_data):
         end_ts = current_ts
 
     market = client.get_market(ticker)
-    candles = market.get_candlesticks(start_ts, end_ts, period=CandlestickPeriod.ONE_HOUR)
+    candles = market.get_candlesticks(
+        start_ts, end_ts, period=CandlestickPeriod.ONE_HOUR
+    )
     return candles.to_dataframe()
+
 
 def download_kalshi_data():
     """Download fed decision market candlestick data and return as dataframe"""
@@ -52,6 +58,7 @@ def download_kalshi_data():
             continue
 
     return pd.concat(full_df_list, ignore_index=True)
+
 
 if __name__ == "__main__":
     os.makedirs("data", exist_ok=True)
