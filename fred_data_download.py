@@ -18,6 +18,13 @@ SERIES = {
 
 START_DATE = "2025-07-30"
 
+# Main function to run fred data and save to parquet for pipeline
+def run_fred_download():
+    df = pull_all_series(SERIES, START_DATE)
+    df.index.name = "date"
+    df.to_parquet("fred_data.parquet")
+    print(df.head())
+
 def pull_series(series_id, start_date):
     """Pull a single FRED series by ID and return as a pandas Series."""
     return fred.get_series(series_id, observation_start=start_date)
@@ -32,8 +39,4 @@ def pull_all_series(series_dict, start_date):
     return pd.DataFrame(frames)
 
 if __name__ == "__main__":
-    df = pull_all_series(SERIES, START_DATE)
-    df.index.name = "date"
-    os.makedirs("data/fred", exist_ok=True)
-    df.to_csv("data/fred/fred_data.csv")
-    print(df.head())
+    run_fred_download()
