@@ -23,9 +23,11 @@ FRED_SERIES = {
 
 START_DATE = "2025-07-30"
 
+
 def pull_series(series_id, start_date):
     """Pull single FRED series by ID and return as pandas"""
     return fred.get_series(series_id, observation_start=start_date)
+
 
 def pull_all_fred(series_dict, start_date):
     """Pull all FRED series intosingle combined dataframe"""
