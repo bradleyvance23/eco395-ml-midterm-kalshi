@@ -106,7 +106,7 @@ Below displays the predicted values of all 5 models against the opening S&P 500 
 ![S&P 500 Predictions Plot](sp500_predictions.png)
 As we can see, all models predict the opening price very closely except for the Random Forest, which makes sense given the Random Forest model had significantly worse MSE values compared to the other model's very small MSE values.
 
-We find that the Kalshi data generally augments the predictive power of our model, as highlighted by the fact that the only feature dropped by the LASSO and Elastic Net models are the volume traded in the "Fed mantains rates" ticker. More specifically, we find that our percentage change in expected change in Federal Funds rate, percentage change in average price across all tickers, and volume traded in "Fed cuts rates 25 bps" and "Fed hikes rates by 25 bps" provide predictive power to our models.
+We find that the Kalshi data generally augments the predictive power of our model, as highlighted by the fact that the only feature dropped by the LASSO and Elastic Net models are the volume traded in the "Fed mantains rates" ticker. More specifically, we find that our percentage change in expected change in Federal Funds rate, percentage change in average price for "Fed mantains rates", and volume traded in "Fed cuts rates 25 bps" and "Fed hikes rates by 25 bps" provide predictive power to our models.
 
 
 Model Coefficients 
@@ -146,6 +146,7 @@ The main limitation for the models was the sample size. With only 7 months of da
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
