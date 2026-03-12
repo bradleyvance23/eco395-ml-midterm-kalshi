@@ -22,6 +22,34 @@ The project also uses anoter Jupiter Notebook called the [SP500futures_otebook](
 
 The python file called [fred_data_download](fred_data_download.py) collects the 3 month, 2 year, and 10 year treasury yields, the yield curve, VIX, and the federal funds rate for the given period. The file pulls the data into a single dataframe used to parquet for pipeline.
 
+#### Kalshi data
+
+In pull_kalshi_api, we pull the kalshi data from their api at the hourly "ticker" level. The ticker here is a "yes/no" betting line for what the fed will decide at a given meeting. (Insert photo of kalshi site)
+
+The data starts at July 30 2025 and extends to the present, and we pull it in "candlestick" format, meaning we get for each hour and ticker combination:
+	- Volume traded in the hour
+	- Open interest (volume traded for the ticker throughout all time)
+	- Mean bet price
+	- Low bet price
+	- High bet price
+
+We then pull the list of tickers kalshi offers for the "fed decision" market to get the open and close dates and times of each ticker and filter to only include the tickers for the upcoming fed meeting (Kalshi offers you the ability to bet on future fed meetings as well).We then characterize each ticker-hour by whether markets are open and if they are on weekends.
+
+To quantify what the prediction markets are telling us, we calculate an "expected fed rate", being the average of the predictions weighted by volume. 
+
+$$exp_rate = {-0.25*(volume_{cut}) + 0*(volume_{stay} +0.25* volume_{hike})}{\sum volume_i}$$
+
+We then aggrergate the data across the market asleep time into the next trading day. (From 5pm 7/30 et- 9 am 7/31 et will be characterized as 7/31), and take
+	- The sum of total volume across the market asleep period for each ticker
+	- The % change across the market asleep period of:
+		- Mean price for each ticker
+		- The expected fed rate (volume and open interest)
+		
+And join it with our macro indicator data to get the final dataset to train and test our model. 
+
+<img width="1288" height="1004" alt="image" src="https://github.com/user-attachments/assets/5e13109d-2368-4e44-ace6-9c0909c1efbb" />
+
+
 *trevor, marco, brad*
 
 *summarize the documentation of the data like in Causal*
@@ -87,5 +115,6 @@ Overall, the results suggest that regularized linear models like the standard Li
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
