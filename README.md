@@ -23,8 +23,8 @@ The python file called [fred_data_download](fred_data_download.py) collects the 
 
 #### Kalshi data
 
-In pull_kalshi_api, we pull the kalshi data from their api at the hourly "ticker" level. The ticker here is a "yes/no" betting line for what the fed will decide at a given meeting. (Insert photo of kalshi site)
-
+In pull_kalshi_api, we pull the kalshi data from their api at the hourly "ticker" level. The ticker here is a "yes/no" betting line for what the fed will decide at a given meeting. 
+<img width="1882" height="1374" alt="image" src="https://github.com/user-attachments/assets/99f08833-e906-46ca-95e9-eb10393c72f4" />
 The data starts at July 30 2025 and extends to the present, and we pull it in "candlestick" format, meaning we get for each hour and ticker combination:
 	- Volume traded in the hour
 	- Open interest (volume traded for the ticker throughout all time)
@@ -124,6 +124,7 @@ The main limitation for the models was the sample size. With only 7 months of da
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
