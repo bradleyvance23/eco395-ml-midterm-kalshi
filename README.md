@@ -48,13 +48,7 @@ We then aggrergate the data across the market asleep time into the next trading 
 		
 And join it with our macro indicator data to get the final dataset to train and test our model. 
 
-*trevor, marco, brad*
-
-*summarize the documentation of the data like in Causal*
-*document all columns/features that are relevant to your analysis*
-*summarize what isn’t in the data*
-
-All time data will be displayed in Eastern Time (EST) for consistency with operating market hours
+All time data will be displayed in Eastern Time (EST) for consistency with operating market hours.
 ### Data Limitations
 Time frame provided by FRED is limited (only a little more than 7 months). The past 7 months have experienced considerable volatility given an increased prevalence of policy shocks.
 
@@ -124,6 +118,7 @@ The main limitation for the models was the sample size. With only 7 months of da
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
