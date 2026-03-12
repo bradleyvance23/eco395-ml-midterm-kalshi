@@ -108,14 +108,14 @@ The Random Forest model performs worse than all of the linear models given the l
 ### Recommendations
 Overall, the results suggest that regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
-*brad*
 ## Limitations
-*idk if this section is redundant* 
+The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used.
 
 ## Reproduction
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
