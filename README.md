@@ -114,6 +114,28 @@ As we can see, all models predict the opening price very closely except for the 
 
 We find that the Kalshi data generally augments the predictive power of our model, as highlighted by the fact that the only feature dropped by the LASSO and Elastic Net models are the volume traded in the "Fed mantains rates" ticker. More specifically, we find that our percentage change in expected change in Federal Funds rate, percentage change in average price across all tickers, and volume traded in "Fed cuts rates 25 bps" and "Fed hikes rates by 25 bps" provide predictive power to our models.
 
+Model Coefficients 
+| Feature | Lasso Coef | Ridge Coef | Elastic Net Coef |
+|--------|-----------|-----------|------------------|
+| Close | 2.7956 | 2.6772 | 2.7884 |
+| Open | -2.7583 | -2.5306 | -2.7230 |
+| Futures_Last_Price | -0.0063 | -0.1795 | -0.0378 |
+| 2yr_treasury | -0.0029 | -0.0239 | -0.0039 |
+| volume_H25 | 0.0013 | 0.0015 | 0.0018 |
+| yield_curve | 0.0006 | -0.0107 | 0.0008 |
+| VIX | -0.0005 | -0.0148 | -0.0018 |
+| Overnight_Return | -0.0004 | -0.0049 | -0.0010 |
+| volume_C25 | -0.0004 | -0.0001 | -0.0013 |
+| mean_H0 | 0.0003 | 0.0027 | 0.0011 |
+| exp_rate | 0.0002 | 0.0047 | 0.0011 |
+| Overnight_Volatility | 0.0002 | 0.0002 | 0.0005 |
+| Volume | -0.0000 | 0.0047 | -0.0000 |
+| Low | 0.0000 | 0.0670 | 0.0034 |
+| High | 0.0000 | -0.0151 | 0.0002 |
+| fed_funds_rate | 0.0000 | -0.0371 | 0.0000 |
+| 10yr_treasury | 0.0000 | 0.0070 | 0.0000 |
+| 3m_treasury | 0.0000 | 0.0291 | 0.0011 |
+| volume_H0 | 0.0000 | 0.0012 | 0.0000 |
 ### Recommendations
 Overall, the results suggest that the Kalshi data is useful and regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 

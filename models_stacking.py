@@ -39,6 +39,7 @@ def train_models(csv_path="data/kalshi_w_macro_markets.csv"):
     y_hat_test_lasso = lasso_model.predict(X_test)
     train_mse_lasso = mean_squared_error(y_train, y_hat_train_lasso)
     test_mse_lasso = mean_squared_error(y_test, y_hat_test_lasso)
+    
 
     ridge_model = Pipeline([
         ("scaler", StandardScaler()),
@@ -97,9 +98,24 @@ def train_models(csv_path="data/kalshi_w_macro_markets.csv"):
         "Stacking":      model_stack,
     }
 
-    return models, X_test, y_test, dates, idx_test, results_df   
+    lasso_coefs = lasso_model.named_steps["lasso"].coef_
+    ridge_coefs = ridge_model.named_steps["ridge"].coef_
+    elastic_coefs = elastic_model.named_steps["elastic"].coef_
+
+    coef_table = pd.DataFrame({
+        "feature": X.columns,
+        "Lasso Coef": lasso_coefs,
+        "Ridge Coef": ridge_coefs,
+        "Elastic Net Coef": elastic_coefs
+    })
+    coef_table["abs_lasso"] = coef_table["Lasso Coef"].abs()
+    coef_table = coef_table.sort_values(by="abs_lasso", ascending=False).drop(columns=["abs_lasso"])
+    
+    return models, X_test, y_test, dates, idx_test, results_df, coef_table  
 
 if __name__ == "__main__":
-    models, X_test, y_test, dates, idx_test, results_df = train_models()
+    models, X_test, y_test, dates, idx_test, results_df, coef_table = train_models()
     print(results_df)
+    print(coef_table.head(15))
     results_df.to_csv("data/model_comparison.csv", index=False)
+    coef_table.to_csv("data/coef_table.csv", index=False)
