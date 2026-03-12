@@ -108,6 +108,7 @@ As we can see, all models predict the opening price very closely except for the 
 
 We find that the Kalshi data generally augments the predictive power of our model, as highlighted by the fact that the only feature dropped by the LASSO and Elastic Net models are the volume traded in the "Fed mantains rates" ticker. More specifically, we find that our percentage change in expected change in Federal Funds rate, percentage change in average price across all tickers, and volume traded in "Fed cuts rates 25 bps" and "Fed hikes rates by 25 bps" provide predictive power to our models.
 
+
 Model Coefficients 
 | Feature | Lasso Coef | Ridge Coef | Elastic Net Coef |
 |--------|-----------|-----------|------------------|
@@ -130,6 +131,11 @@ Model Coefficients
 | 10yr_treasury | 0.0000 | 0.0070 | 0.0000 |
 | 3m_treasury | 0.0000 | 0.0291 | 0.0011 |
 | volume_H0 | 0.0000 | 0.0012 | 0.0000 |
+
+
+The table below compares the estimated coefficients from the Lasso, Ridge, and Elastic Net models.  
+Lasso performs variable selection by shrinking some coefficients to zero, while Ridge and Elastic Net retain more predictors with smaller magnitudes.
+
 ### Recommendations
 Overall, the results suggest that the Kalshi data is useful and regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
@@ -140,6 +146,7 @@ The main limitation for the models was the sample size. With only 7 months of da
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
