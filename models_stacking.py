@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import papermill as pm
 
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 from sklearn.ensemble import StackingRegressor
@@ -15,7 +16,7 @@ def train_models(csv_path="data/kalshi_w_macro_markets.csv"):
     df = pd.read_csv(csv_path)
     df = df.drop(columns=["mean_C25", "mean_H25", "exp_rate_open_interest"]).fillna(0)
 
-    target_col = "Day Change %"
+    target_col = "Overnight Change %"
     dates = pd.to_datetime(df["Date"])
 
     X = df.drop(columns=["Date", target_col])
