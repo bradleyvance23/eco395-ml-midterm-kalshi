@@ -1,6 +1,6 @@
-from fred_data_download import pull_all_fred, FRED_SERIES
-from SP500_notebook import download_sp500
-from SP500futures_notebook import download_futures
+from data_collection.fred_data_download import pull_all_fred, FRED_SERIES
+from data_collection.SP500_notebook import download_sp500
+from data_collection.SP500futures_notebook import download_futures
 from pull_api import download_kalshi_data
 import os
 

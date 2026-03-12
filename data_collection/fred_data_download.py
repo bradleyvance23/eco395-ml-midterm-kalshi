@@ -42,4 +42,4 @@ if __name__ == "__main__":
     df = pull_all_fred(FRED_SERIES, START_DATE)
     df.index.name = "date"
     os.makedirs("data", exist_ok=True)
-    df.to_csv("data/fred_data.csv")
+    df.to_csv("../data/fred_data.csv")
