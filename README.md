@@ -82,7 +82,7 @@ All models were evaluated with a chronological train/est split to help mimic an 
 
 
 ## Results
-The train and test MSE values from the five models are reproduced below:
+The train and test MSE values from the six models are reproduced below:
 | Model | Train MSE | Test MSE |
 | :--- | :--- | :--- |
 | Linear Regression | 0.0002363762177756273 | 0.0003169875288916838 |
@@ -102,7 +102,9 @@ The Elastic Net model, which combines both types of penalties from the LASSO and
 
 The Random Forest model performs worse than all of the linear models given the larger train and test MSE values. The large gap between the train and test errors indicates significant overfitting. Random Forest models are powerful for capturing nonlinear relationships, but the dataset consists of financial variables that are largely linear transformations of each other. Additionaly, the small sample size of daily market observations limits the ability of tree-based models to learn stable patterns.
 
-Below displays the predicted values of all 5 models against the opening S&P 500 price.
+The Stacking Regressor combines predictions from multiple base models to generate a final prediction. The model produces relatively small train and test MSE values, indicating that it generalizes reasonably well to the test data. However, it does not outperform the LASSO or Elastic Net models. Because many of the predictors are highly correlated and already well captured by regularized linear models, stacking is limited in improving predictive accuracy.
+
+Below displays the predicted values of all 6 models against the opening S&P 500 price.
 ![S&P 500 Predictions Plot](sp500_predictions.png)
 As we can see, all models predict the opening price very closely except for the Random Forest, which makes sense given the Random Forest model had significantly worse MSE values compared to the other model's very small MSE values.
 
@@ -145,7 +147,9 @@ The main limitation for the models was the sample size. With only 7 months of da
 ## Reproduction
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
-3. Run 
+3. Generate API keys for FRED and Kalshi data collection and place them in environment
+4. Run data_consolidation.ipynb, clean_kalshi_api.ipynb, and visualization.py
+
 
 
 
