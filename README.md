@@ -105,6 +105,9 @@ The Elastic Net model, which combines both types of penalties from the LASSO and
 
 The Random Forest model performs worse than all of the linear models given the larger train and test MSE values. The large gap between the train and test errors indicates significant overfitting. Random Forest models are powerful for capturing nonlinear relationships, but the dataset consists of financial variables that are largely linear transformations of each other. Additionaly, the small sample size of daily market observations limits the ability of tree-based models to learn stable patterns.
 
+Below displays the predicted values of all 5 models against the opening S&P 500 price.
+![S&P 500 Predictions Plot](sp500_predictions.png)
+As we can see, all models predict the opening price very closely except for the Random Forest, which makes sense given the Random Forest model had significantly worse MSE values compared to the other model's very small MSE values.
 ### Recommendations
 Overall, the results suggest that regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
