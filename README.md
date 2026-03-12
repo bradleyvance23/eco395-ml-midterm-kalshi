@@ -3,8 +3,7 @@
 ## Project Overview
 This project seeks to predict how the financial markets move during the opening hour based on Kalshi's Federal Funds Rate Prediction Market using Kalshi's API along with S&P 500 Overnight futures trading activity and other macroeconomic indicates such as treasury yields, VIX (volatility index for all stocks traded), and the federal funds rate. The movement measures the difference between the previous trading day's closing price and the current trading day's opening price.
 
-*Marco and Trevor*
-*Further discuss problem and assert goals*
+Kalshi allows users to place bets predicting the Fed's Federal Funds rate decision, which we propose to use as a signal for people's expectations of the economy. Leveraging the fact that Kalshi allows users to trade overnight, we test whether different changes in this signal during market closure can be used to better predict the change in the S&P500 from its previous closing price to its opening price. Our results indicate that the features from Kalshi enchance our predictions, and highlight the strengths and limitations of different models in our prediction exercise.
 
 ## Data
 ### Data Sources
@@ -108,8 +107,11 @@ The Random Forest model performs worse than all of the linear models given the l
 Below displays the predicted values of all 5 models against the opening S&P 500 price.
 ![S&P 500 Predictions Plot](sp500_predictions.png)
 As we can see, all models predict the opening price very closely except for the Random Forest, which makes sense given the Random Forest model had significantly worse MSE values compared to the other model's very small MSE values.
+
+We find that the Kalshi data generally augments the predictive power of our model, as highlighted by the fact that the only feature dropped by the LASSO and Elastic Net models are the volume traded in the "Fed mantains rates" ticker. More specifically, we find that our percentage change in expected change in Federal Funds rate, percentage change in average price across all tickers, and volume traded in "Fed cuts rates 25 bps" and "Fed hikes rates by 25 bps" provide predictive power to our models.
+
 ### Recommendations
-Overall, the results suggest that regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
+Overall, the results suggest that the Kalshi data is useful and regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
 ## Limitations
 The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used.
@@ -118,6 +120,7 @@ The main limitation for the models was the sample size. With only 7 months of da
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
