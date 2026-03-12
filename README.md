@@ -22,6 +22,33 @@ The project also uses anoter Jupiter Notebook called the [SP500futures_otebook](
 
 The python file called [fred_data_download](fred_data_download.py) collects the 3 month, 2 year, and 10 year treasury yields, the yield curve, VIX, and the federal funds rate for the given period. The file pulls the data into a single dataframe used to parquet for pipeline.
 
+#### Kalshi data
+
+In pull_kalshi_api, we pull the kalshi data from their api at the hourly "ticker" level. The ticker here is a "yes/no" betting line for what the fed will decide at a given meeting. (Insert photo of kalshi site)
+
+The data starts at July 30 2025 and extends to the present, and we pull it in "candlestick" format, meaning we get for each hour and ticker combination:
+	- Volume traded in the hour
+	- Open interest (volume traded for the ticker throughout all time)
+	- Mean bet price
+	- Low bet price
+	- High bet price
+
+We then pull the list of tickers kalshi offers for the "fed decision" market to get the open and close dates and times of each ticker and filter to only include the tickers for the upcoming fed meeting (Kalshi offers you the ability to bet on future fed meetings as well).We then characterize each ticker-hour by whether markets are open and if they are on weekends.
+
+To quantify what the prediction markets are telling us, we calculate an "expected change of fed rate", being the average of the predictions  of what will happen to the fed rate weighted by volume. 
+
+$$ \Delta expectedrate = \frac{-0.25 * volume_{cut} + 0 * volume_{stay} +0.25 * volume_{hike}}{\sum volume_i}$$
+
+For convenience, we ignore the tickers for hikes or cuts above 25 basis points, but these tickers are traded much less frequently. 
+
+We then aggrergate the data across the market asleep time into the next trading day. (From 5pm 7/30 et- 9 am 7/31 et will be characterized as 7/31), and take
+	- The sum of total volume across the market asleep period for each ticker
+	- The % change across the market asleep period of:
+		- Mean price for each ticker
+		- The expected fed rate (volume and open interest)
+		
+And join it with our macro indicator data to get the final dataset to train and test our model. 
+
 *trevor, marco, brad*
 
 *summarize the documentation of the data like in Causal*
@@ -33,9 +60,28 @@ All time data will be displayed in Eastern Time (EST) for consistency with opera
 Time frame provided by FRED is limited (only a little more than 7 months). The past 7 months have experienced considerable volatility given an increased prevalence of policy shocks.
 
 ## Methodology
-*blayne*
+We evaluate several machine learning models to predict dialy S&P 500 market movements with a combination of financial market data, macroeconomic indicators, and prediction market signals from Kalshi. Our target variable here is the daily market movement which is measured by Day Change % that represents the percent change between the previous trading days close and the current trading days open. The predictive prefromance is assesed through multiple regression based approaches that are implemented and the coomparing out-of-sample metrics. 
 
-*explain and evaluated modeling approaches*
+Baseline Model: Linear Regression 
+A standard linear regression model is used as the baseline benchmark. This provides a useful reference point for us to determine what other techniques could be used to improve the predictive preformance. However, we expect this model to have limitations here becasue of how many predictors in the dataset are correlated. 
+
+Regularized Linear Models: 
+Going into this we know that many of the financial and macroeconomic variables are heavily correlated, regularization methods were implemented to help stabilize coefficient estimates and reduce overfitting.
+* Lasso Regression: preforms variable selection by shrinking some coefficients to zero, which should be effective when there are many predictors.
+* Ridge Regression: Shrinks coefficients but keeps all the predictors, should be effective when predictors are highly correlated. 
+* Elastic Net: combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
+
+
+Because we had a smaller dataset we utilized the cross-validated versions (`LassoCV`, `RidgeCV`, and `ElasticNetCV`) to help ensure the models generalize well and avoid overfitting the data. This helps prevent overfitting and produces more stable parameter estimates without manual tuning. 
+
+Nonlinear Model: Random Forest
+A random forest model was included to help capture  nonlinear relationships and any potential interactions among the predictors. For example we could potentially see interactions between volatility measures, interest rates, and overnight futures that may influence market movements in ways that are not purely linear. 
+
+Ensemble Model: Stacking
+A stacking model was implemented with `StackingRegressor` to combine predictions from the lasso model and the random forest model to look at a model that combines capturing both the linear relationships and preforms variable selection with capturing the nonlinear relationships and interactions. 
+
+All models were evaluated with a chronological train/est split to help mimic an out-of-sample forecasting scenario. Preformance was measured using the mean squared error and the root mean squared error on both the training and the test dataset, which allowed us to evaluate the predictive accuracy and see if there is any potential overfitting. 
+
 ### Modeling Limitations 
 
 ## Results
@@ -47,6 +93,7 @@ The train and test MSE values from the five models are reproduced below:
 | Ridge | 0.0010176078034475062 | 0.0010134060445877683 |
 | Elastic Net | 0.0002755623454545451 | 0.00025072575196162235 |
 | Random Forest | 0.06431674622296985 | 0.40042649247406187 |
+| Stacking Regressor  | 0.000248 | 0.000290 |
 
 The linear regression model has very close train and test MSEs, signaling that the model generalizes well as a baseline model. However, given many of the variables are very closely related, such as opening S&P 500 price and overnight future price at 9:00am EST, these MSEs may signal that there is high autocorrelation in the model. Financial market variables that are measured within minutes of each other often move together, meaning that ordinary least squares may suffer from multicollinearity even though the model appears to fit the data well.
 
@@ -61,13 +108,18 @@ The Random Forest model performs worse than all of the linear models given the l
 ### Recommendations
 Overall, the results suggest that regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
-*brad*
 ## Limitations
-*idk if this section is redundant* 
+The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used.
 
 ## Reproduction
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
+
+
+
+
+
 
 
