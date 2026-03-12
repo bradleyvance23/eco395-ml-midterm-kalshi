@@ -37,7 +37,9 @@ We then pull the list of tickers kalshi offers for the "fed decision" market to 
 
 To quantify what the prediction markets are telling us, we calculate an "expected fed rate", being the average of the predictions weighted by volume. 
 
-$$exp_rate = {-0.25*(volume_{cut}) + 0*(volume_{stay} +0.25* volume_{hike})}{\sum volume_i}$$
+$$expextedrate = \frac{-0.25*volume_{cut}) + 0*volume_{stay} +0.25* volume_{hike})}{\sum volume_i}$$
+
+For convenience, we ignore the tickers for hikes or cuts above 25 basis points.
 
 We then aggrergate the data across the market asleep time into the next trading day. (From 5pm 7/30 et- 9 am 7/31 et will be characterized as 7/31), and take
 	- The sum of total volume across the market asleep period for each ticker
@@ -115,6 +117,7 @@ Overall, the results suggest that regularized linear models like the standard Li
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
