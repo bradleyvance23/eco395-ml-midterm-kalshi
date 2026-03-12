@@ -11,17 +11,17 @@ from sklearn.model_selection import train_test_split
 
 from sklearn.linear_model import ElasticNetCV, LassoCV, LinearRegression, RidgeCV
 
-
-if __name__ == "__main__":
-    df = pd.read_csv("kalshi_w_macro_markets.csv")  
+def train_models(csv_path="data/kalshi_w_macro_markets.csv"):
+    df = pd.read_csv(csv_path)
     df = df.drop(columns=["mean_C25", "mean_H25", "exp_rate_open_interest"]).fillna(0)
 
     target_col = "Day Change %"
+    dates = pd.to_datetime(df["Date"])
 
     X = df.drop(columns=["Date", target_col])
     y = df[target_col]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test, _, idx_test = train_test_split(X, y, np.arange(len(df)), test_size=0.2, random_state=42)
 
     linear_model = LinearRegression()
     linear_model.fit(X_train, y_train)
@@ -88,5 +88,18 @@ if __name__ == "__main__":
         "train_mse": [train_mse_linear, train_mse_lasso, train_mse_ridge, train_mse_elastic, train_mse_rf, train_mse_stack],
         "test_mse": [test_mse_linear, test_mse_lasso, test_mse_ridge, test_mse_elastic, test_mse_rf, test_mse_stack]
     })
+    models = {
+        "Linear":        linear_model,
+        "Lasso":         lasso_model,
+        "Ridge":         ridge_model,
+        "Elastic Net":   elastic_model,
+        "Random Forest": random_forest_model,
+        "Stacking":      model_stack,
+    }
+
+    return models, X_test, y_test, dates, idx_test, results_df   
+
+if __name__ == "__main__":
+    models, X_test, y_test, dates, idx_test, results_df = train_models()
     print(results_df)
-    results_df.to_csv("model_comparison.csv", index=False)
+    results_df.to_csv("data/model_comparison.csv", index=False)
