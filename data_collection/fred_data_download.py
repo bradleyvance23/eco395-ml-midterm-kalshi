@@ -2,7 +2,7 @@ import os
 import fredapi
 import pandas as pd
 from dotenv import load_dotenv
-import papermill as pm
+
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ def pull_all_series(series_dict, start_date):
 def run_fred_download():
     df = pull_all_series(SERIES, START_DATE)
     df.index.name = "date"
-    df.to_parquet("fred_data.parquet")
+    df.to_parquet("../data/fred_data.parquet")
     print(df.head())
 
 
@@ -43,9 +43,3 @@ if __name__ == "__main__":
     
     # download fred data
     run_fred_download()
-
-    # run notebook pipeline
-    pm.execute_notebook(
-        "SP500_notebook.ipynb",
-        "SP500_notebook_output.ipynb"
-    )
