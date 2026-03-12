@@ -60,7 +60,7 @@ All time data will be displayed in Eastern Time (EST) for consistency with opera
 Time frame provided by FRED is limited (only a little more than 7 months). The past 7 months have experienced considerable volatility given an increased prevalence of policy shocks.
 
 ## Methodology
-We evaluate several machine learning models to predict dialy S&P 500 market movements with a combination of financial market data, macroeconomic indicators, and prediction market signals from Kalshi. Our target variable here is the daily market movement which is measured by Day Change % that represents the percent change between the previous trading days close and the current trading days open. The predictive prefromance is assesed through multiple regression based approaches that are implemented and the coomparing out-of-sample metrics. 
+We evaluate several machine learning models to predict daily S&P 500 market movements with a combination of financial market data, macroeconomic indicators, and prediction market signals from Kalshi. Our target variable here is the daily market movement which is measured by Day Change % that represents the percent change between the previous trading days close and the current trading days open. The predictive prefromance is assesed through multiple regression based approaches that are implemented and the coomparing out-of-sample metrics. 
 
 Baseline Model: Linear Regression 
 
@@ -69,9 +69,9 @@ A standard linear regression model is used as the baseline benchmark. This provi
 Regularized Linear Models: 
 
 Going into this we know that many of the financial and macroeconomic variables are heavily correlated, regularization methods were implemented to help stabilize coefficient estimates and reduce overfitting.
-* Lasso Regression: preforms variable selection by shrinking some coefficients to zero, which should be effective when there are many predictors.
+* Lasso Regression: Performs variable selection by shrinking some coefficients to zero, which should be effective when there are many predictors.
 * Ridge Regression: Shrinks coefficients but keeps all the predictors, should be effective when predictors are highly correlated. 
-* Elastic Net: combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
+* Elastic Net: Combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
 
 
 Because we had a smaller dataset we utilized the cross-validated versions (`LassoCV`, `RidgeCV`, and `ElasticNetCV`) to help ensure the models generalize well and avoid overfitting the data. This helps prevent overfitting and produces more stable parameter estimates without manual tuning. 
@@ -116,12 +116,13 @@ As we can see, all models predict the opening price very closely except for the 
 Overall, the results suggest that regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
 ## Limitations
-The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used.
+The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used. 
 
 ## Reproduction
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
