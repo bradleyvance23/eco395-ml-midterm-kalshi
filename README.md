@@ -49,9 +49,6 @@ We then aggrergate the data across the market asleep time into the next trading 
 		
 And join it with our macro indicator data to get the final dataset to train and test our model. 
 
-<img width="1288" height="1004" alt="image" src="https://github.com/user-attachments/assets/5e13109d-2368-4e44-ace6-9c0909c1efbb" />
-
-
 *trevor, marco, brad*
 
 *summarize the documentation of the data like in Causal*
@@ -117,6 +114,7 @@ Overall, the results suggest that regularized linear models like the standard Li
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
