@@ -71,6 +71,7 @@ Going into this we know that many of the financial and macroeconomic variables a
 * Ridge Regression: Shrinks coefficients but keeps all the predictors, should be effective when predictors are highly correlated. 
 * Elastic Net: combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
 
+
 Because we had a smaller dataset we utilized the cross-validated versions (`LassoCV`, `RidgeCV`, and `ElasticNetCV`) to help ensure the models generalize well and avoid overfitting the data. This helps prevent overfitting and produces more stable parameter estimates without manual tuning. 
 
 Nonlinear Model: Random Forest
@@ -92,6 +93,7 @@ The train and test MSE values from the five models are reproduced below:
 | Ridge | 0.0010176078034475062 | 0.0010134060445877683 |
 | Elastic Net | 0.0002755623454545451 | 0.00025072575196162235 |
 | Random Forest | 0.06431674622296985 | 0.40042649247406187 |
+| Stacking Regressor  | 0.000248 | 0.000290 |
 
 The linear regression model has very close train and test MSEs, signaling that the model generalizes well as a baseline model. However, given many of the variables are very closely related, such as opening S&P 500 price and overnight future price at 9:00am EST, these MSEs may signal that there is high autocorrelation in the model. Financial market variables that are measured within minutes of each other often move together, meaning that ordinary least squares may suffer from multicollinearity even though the model appears to fit the data well.
 
@@ -114,10 +116,6 @@ Overall, the results suggest that regularized linear models like the standard Li
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
-
-
-
-
 
 
 
