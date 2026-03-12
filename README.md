@@ -85,7 +85,7 @@ A stacking model was implemented with `StackingRegressor` to combine predictions
 
 All models were evaluated with a chronological train/est split to help mimic an out-of-sample forecasting scenario. Preformance was measured using the mean squared error and the root mean squared error on both the training and the test dataset, which allowed us to evaluate the predictive accuracy and see if there is any potential overfitting. 
 
-### Modeling Limitations 
+
 
 ## Results
 The train and test MSE values from the five models are reproduced below:
@@ -124,6 +124,7 @@ The main limitation for the models was the sample size. With only 7 months of da
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 
