@@ -13,7 +13,7 @@ from sklearn.linear_model import ElasticNetCV, LassoCV, LinearRegression, RidgeC
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("kalshi_w_macro_markets.csv")  
+    df = pd.read_csv("data/kalshi_w_macro_markets.csv")  
     df = df.drop(columns=["mean_C25", "mean_H25", "exp_rate_open_interest"]).fillna(0)
 
     target_col = "Day Change %"
