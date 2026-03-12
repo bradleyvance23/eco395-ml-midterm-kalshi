@@ -38,4 +38,4 @@ def download_futures(start_date, end_date):
 if __name__ == "__main__":
     os.makedirs("data", exist_ok=True)
     futures = download_futures(start_date="2025-07-30", end_date="2026-03-11")
-    futures.to_csv("data/Overnight_SP500_data.csv")
+    futures.to_csv("../data/Overnight_SP500_data.csv")
