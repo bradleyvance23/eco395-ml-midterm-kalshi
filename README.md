@@ -33,9 +33,27 @@ All time data will be displayed in Eastern Time (EST) for consistency with opera
 Time frame provided by FRED is limited (only a little more than 7 months). The past 7 months have experienced considerable volatility given an increased prevalence of policy shocks.
 
 ## Methodology
-*blayne*
+We evaluate several machine learning models to predict dialy S&P 500 market movements with a combination of financial market data, macroeconomic indicators, and prediction market signals from Kalshi. Our target variable here is the daily market movement which is measured by Day Change % that represents the percent change between the previous trading days close and the current trading days open. The predictive prefromance is assesed through multiple regression based approaches that are implemented and the coomparing out-of-sample metrics. 
 
-*explain and evaluated modeling approaches*
+Baseline Model: Linear Regression 
+A standard linear regression model is used as the baseline benchmark. This provides a useful reference point for us to determine what other techniques could be used to improve the predictive preformance. However, we expect this model to have limitations here becasue of how many predictors in the dataset are correlated. 
+
+Regularized Linear Models: 
+Going into this we know that many of the financial and macroeconomic variables are heavily correlated, regularization methods were implemented to help stabilize coefficient estimates and reduce overfitting.
+* Lasso Regression: preforms variable selection by shrinking some coefficients to zero, which should be effective when there are many predictors.
+* Ridge Regression: Shrinks coefficients but keeps all the predictors, should be effective when predictors are highly correlated. 
+* Elastic Net: combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
+
+Because we had a smaller dataset we utilized the cross-validated versions (`LassoCV`, `RidgeCV`, and `ElasticNetCV`) to help ensure the models generalize well and avoid overfitting the data. This helps prevent overfitting and produces more stable parameter estimates without manual tuning. 
+
+Nonlinear Model: Random Forest
+A random forest model was included to help capture  nonlinear relationships and any potential interactions among the predictors. For example we could potentially see interactions between volatility measures, interest rates, and overnight futures that may influence market movements in ways that are not purely linear. 
+
+Ensemble Model: Stacking
+A stacking model was implemented with `StackingRegressor` to combine predictions from the lasso model and the random forest model to look at a model that combines capturing both the linear relationships and preforms variable selection with capturing the nonlinear relationships and interactions. 
+
+All models were evaluated with a chronological train/est split to help mimic an out-of-sample forecasting scenario. Preformance was measured using the mean squared error and the root mean squared error on both the training and the test dataset, which allowed us to evaluate the predictive accuracy and see if there is any potential overfitting. 
+
 ### Modeling Limitations 
 
 ## Results
