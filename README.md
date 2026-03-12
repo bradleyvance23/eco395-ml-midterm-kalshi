@@ -59,24 +59,28 @@ All time data will be displayed in Eastern Time (EST) for consistency with opera
 Time frame provided by FRED is limited (only a little more than 7 months). The past 7 months have experienced considerable volatility given an increased prevalence of policy shocks.
 
 ## Methodology
-We evaluate several machine learning models to predict dialy S&P 500 market movements with a combination of financial market data, macroeconomic indicators, and prediction market signals from Kalshi. Our target variable here is the daily market movement which is measured by Day Change % that represents the percent change between the previous trading days close and the current trading days open. The predictive prefromance is assesed through multiple regression based approaches that are implemented and the coomparing out-of-sample metrics. 
+We evaluate several machine learning models to predict daily S&P 500 market movements with a combination of financial market data, macroeconomic indicators, and prediction market signals from Kalshi. Our target variable here is the daily market movement which is measured by Day Change % that represents the percent change between the previous trading days close and the current trading days open. The predictive prefromance is assesed through multiple regression based approaches that are implemented and the coomparing out-of-sample metrics. 
 
 Baseline Model: Linear Regression 
+
 A standard linear regression model is used as the baseline benchmark. This provides a useful reference point for us to determine what other techniques could be used to improve the predictive preformance. However, we expect this model to have limitations here becasue of how many predictors in the dataset are correlated. 
 
 Regularized Linear Models: 
+
 Going into this we know that many of the financial and macroeconomic variables are heavily correlated, regularization methods were implemented to help stabilize coefficient estimates and reduce overfitting.
-* Lasso Regression: preforms variable selection by shrinking some coefficients to zero, which should be effective when there are many predictors.
+* Lasso Regression: Performs variable selection by shrinking some coefficients to zero, which should be effective when there are many predictors.
 * Ridge Regression: Shrinks coefficients but keeps all the predictors, should be effective when predictors are highly correlated. 
-* Elastic Net: combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
+* Elastic Net: Combines both the lasso and ridge regression to allow the model to preform both coefficient shrinking and variable selection simultaneously.  
 
 
 Because we had a smaller dataset we utilized the cross-validated versions (`LassoCV`, `RidgeCV`, and `ElasticNetCV`) to help ensure the models generalize well and avoid overfitting the data. This helps prevent overfitting and produces more stable parameter estimates without manual tuning. 
 
 Nonlinear Model: Random Forest
+
 A random forest model was included to help capture  nonlinear relationships and any potential interactions among the predictors. For example we could potentially see interactions between volatility measures, interest rates, and overnight futures that may influence market movements in ways that are not purely linear. 
 
 Ensemble Model: Stacking
+
 A stacking model was implemented with `StackingRegressor` to combine predictions from the lasso model and the random forest model to look at a model that combines capturing both the linear relationships and preforms variable selection with capturing the nonlinear relationships and interactions. 
 
 All models were evaluated with a chronological train/est split to help mimic an out-of-sample forecasting scenario. Preformance was measured using the mean squared error and the root mean squared error on both the training and the test dataset, which allowed us to evaluate the predictive accuracy and see if there is any potential overfitting. 
@@ -114,12 +118,13 @@ We find that the Kalshi data generally augments the predictive power of our mode
 Overall, the results suggest that the Kalshi data is useful and regularized linear models like the standard Linear Regression, LASSO, and Elastic Net perform the best for predicting the S&P 500 opening price for this project. Among the models tested, the LASSO regression provides the strongest out-of-sample performance. This indicates that variable selection plays the most important role when working with highly correlated financial indicators. The Elastic Net performed the second best given its hybrid nature between LASSO and Ridge models. The Random Forest is not recommended for this study given the non-linear nature of the model and the linear nature of the financial variables.
 
 ## Limitations
-The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used.
+The main limitation for the models was the sample size. With only 7 months of data, the predictive power that was possible through the models was somewhat limited by only possessing data for a period where the main expectations was rate cuts. Our Random Forest model was especially limited by the small sample size. Additionally, data about the exact numbers of bets for and against particalur federal funds rate outcomes would have provided very helpful information. There is also some concern about potentially high multicollinearity between several of the variables used. 
 
 ## Reproduction
 1. Clone the repository `git@github.com:bradleyvance23/eco395-ml-midterm-kalshi.git`
 2. Install additional packages `pip install -r requirements`
 3. Run 
+
 
 
 

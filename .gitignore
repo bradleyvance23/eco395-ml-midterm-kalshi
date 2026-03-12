@@ -1,3 +1,8 @@
-.pem
-__pycache__
+SP500_notebook_output.ipynb
+SP500_data.parquet
+SP500futures_notebook_output.ipynb
+Overnight_SP500_data.csv
 .env
+SP500_data.csv
+fred_data.parquet
+kalshi_private_key.pem
